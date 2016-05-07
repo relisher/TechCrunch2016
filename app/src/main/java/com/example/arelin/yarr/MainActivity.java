@@ -42,12 +42,12 @@ public class MainActivity extends Activity {
             }
         });
         Button clickButton2 = (Button) findViewById(R.id.Keyword);
-        clickButton.setOnClickListener(new View.OnClickListener() {
+        clickButton2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(this, whatever.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, AddKeywords.class);
+                startActivity(intent);
             }
         });
     }

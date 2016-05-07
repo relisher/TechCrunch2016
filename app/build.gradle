@@ -24,4 +24,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/JARVIS-API.jar')
+    compile files('libs/javaFlacEncoder-0.3.1.jar')
+    compile files('libs/java-sdk-3.0.0-RC1-jar-with-dependencies.jar')
 }

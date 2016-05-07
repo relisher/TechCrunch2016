@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Listening"
-        android:id="@+id/button"
+        android:id="@+id/Listening"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="116dp" />
@@ -22,10 +22,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Keyword"
-        android:id="@+id/button2"
+        android:id="@+id/Keyword"
         android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
+        android:layout_alignLeft="@+id/Listening"
+        android:layout_alignStart="@+id/Listening"
+        android:layout_alignRight="@+id/Listening"
+        android:layout_alignEnd="@+id/Listening" />
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.arelin.yarr;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -36,27 +37,25 @@ public class MainActivity extends Activity {
 
     private Thread recordingThread = null;
     private boolean isRecording = false;
+    static Context c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int one = 0;
-        int two = 0 ;
+
 
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.INTERNET},
                 one);
-
-
-        int permissionCheck2 = ContextCompat.checkSelfPermission(MainActivity.this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
         setContentView(R.layout.activity_main);
         Button clickButton = (Button) findViewById(R.id.Listening);
         clickButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                   c = v.getContext();
                    new Thread(new RecordingHandler()).start();
             }
         });

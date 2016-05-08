@@ -20,8 +20,8 @@ public class SoundMeter {
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT);
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.VORBIS);
-            String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audiorecordtest.3gp";
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audiorecordtest.AAC";
 
             mRecorder.setOutputFile(mFileName);
             try {

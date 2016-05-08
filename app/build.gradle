@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.arelin.yarr"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -20,7 +20,11 @@ android {
         }
     }
 }
-
+repositories{
+    flatDir{
+        dirs 'libs'
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -28,5 +32,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/JARVIS-API.jar')
     compile files('libs/javaFlacEncoder-0.3.1.jar')
-
+    compile 'com.writingminds:FFmpegAndroid:0.3.2'
+    compile files('libs/jaad-0.8.4.jar')
+    compile (name:'speech-android-wrapper',ext:'aar')
 }
+

@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-
-    <TextLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="173dp"
+    <EditText
+        android:id="@+id/txtItem"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="List View"
-        android:id="@+id/textView" />
+        android:inputType="text"
+        android:hint="Input"
+        />
 
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Add!"
+        android:layout_toRightOf="@id/txtItem"
+        />
 
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtItem"
+        />
 
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtItem"
+        android:text=""
+        android:gravity="center_horizontal"
+        />
 
+</RelativeLayout>

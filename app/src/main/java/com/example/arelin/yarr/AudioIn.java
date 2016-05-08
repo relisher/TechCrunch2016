@@ -12,6 +12,7 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechResults;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.BaseRecognizeCallback;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,7 +20,7 @@ import java.io.FileOutputStream;
 /**
  * Created by arelin on 5/8/16.
  */
-public class AudioIn extends Thread {
+public class AudioIn extends Thread  {
     private boolean stopped    = false;
 
     public AudioIn() {
@@ -39,16 +40,16 @@ public class AudioIn extends Thread {
 
             SpeechToText service = new SpeechToText();
             RecognizeOptions.Builder builder = new RecognizeOptions.Builder();
-            builder.continuous(true).interimResults(true).contentType(HttpMediaType.AUDIO_RAW);
+            builder.continuous(true).interimResults(true).contentType("audio/l16; rate=16000");
             service.setUsernameAndPassword("92ecaafd-80cc-4acf-8b77-06b464f6f1c3", "pmcyy56RTfSF");
-            int N = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO,AudioFormat.ENCODING_PCM_16BIT);
-            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/8k16bitMonoTEST.pcm";
+            int N = AudioRecord.getMinBufferSize(16000, AudioFormat.CHANNEL_IN_MONO,AudioFormat.ENCODING_PCM_16BIT);
+            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/8k16bitMono.pcm";
 
 
 
 
             recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
-                    8000,
+                    16000,
                     AudioFormat.CHANNEL_IN_MONO,
                     AudioFormat.ENCODING_PCM_16BIT,
                     N*10);
@@ -70,12 +71,26 @@ public class AudioIn extends Thread {
                 //process is what you will do with the data...not defined here
                 byte bData[] = short2byte(buffer);
                 os.write(bData, 0, 44650);
-                service.recognizeUsingWebSocket(new FileInputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/8k16bitMonoTEST.pcm"),
+                service.recognizeUsingWebSocket( new ByteArrayInputStream(bData),
                         builder.build(), new BaseRecognizeCallback() {
+                            @Override
+                            public void onError(Exception e)
+                            {
+                                Log.d("Error!", e.toString());
+                                e.printStackTrace();
+                            }
                             @Override
                             public void onTranscription(SpeechResults speechResults) {
                                 System.out.println(speechResults);
                                 Log.d("output:", speechResults.toString());
+                                for (String s : AddKeywords.list)
+                                {
+                                    if(speechResults.getResults().contains(s))
+                                    {
+                                        Log.d("test","YA GOT ME");
+                                        // do sound intent here
+                                    }
+                                }
                             }
                         }
                 );
@@ -87,7 +102,6 @@ public class AudioIn extends Thread {
             close();
         }
     }
-
     private byte[] short2byte(short[] sData) {
         int shortArrsize = sData.length;
         byte[] bytes = new byte[shortArrsize * 2];

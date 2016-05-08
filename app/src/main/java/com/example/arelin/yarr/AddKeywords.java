@@ -19,7 +19,7 @@ public class AddKeywords extends ListActivity {
 
 
         /** Items entered by the user is stored in this ArrayList variable */
-        ArrayList<String> list = new ArrayList<String>();
+        public static ArrayList<String> list = new ArrayList<String>();
 
         /** Declaring an ArrayAdapter to set items to ListView */
         ArrayAdapter<String> adapter;
@@ -46,6 +46,7 @@ public class AddKeywords extends ListActivity {
                     list.add(edit.getText().toString());
                     edit.setText("");
                     adapter.notifyDataSetChanged();
+
                 }
             };
 

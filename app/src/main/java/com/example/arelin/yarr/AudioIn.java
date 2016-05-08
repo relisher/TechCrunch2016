@@ -1,6 +1,8 @@
 package com.example.arelin.yarr;
 
+import android.content.Context;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Environment;
@@ -11,6 +13,7 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.RecognizeOptions;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechResults;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.BaseRecognizeCallback;
+import com.sigpwned.jsonification.JsonValue;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -20,6 +23,7 @@ import java.io.FileOutputStream;
 /**
  * Created by arelin on 5/8/16.
  */
+import com.harman.everestelite.HeadPhoneCtrl;
 public class AudioIn extends Thread  {
     private boolean stopped    = false;
 
@@ -44,8 +48,7 @@ public class AudioIn extends Thread  {
             service.setUsernameAndPassword("92ecaafd-80cc-4acf-8b77-06b464f6f1c3", "pmcyy56RTfSF");
             int N = AudioRecord.getMinBufferSize(16000, AudioFormat.CHANNEL_IN_MONO,AudioFormat.ENCODING_PCM_16BIT);
             String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/8k16bitMono.pcm";
-
-
+            final AudioManager mgr=(AudioManager)MainActivity.c.getSystemService(Context.AUDIO_SERVICE);
 
 
             recorder = new AudioRecord(MediaRecorder.AudioSource.MIC,
@@ -71,6 +74,7 @@ public class AudioIn extends Thread  {
                 //process is what you will do with the data...not defined here
                 byte bData[] = short2byte(buffer);
                 os.write(bData, 0, 44650);
+
                 service.recognizeUsingWebSocket( new ByteArrayInputStream(bData),
                         builder.build(), new BaseRecognizeCallback() {
                             @Override
@@ -85,12 +89,15 @@ public class AudioIn extends Thread  {
                                 Log.d("output:", speechResults.toString());
                                 for (String s : AddKeywords.list)
                                 {
-                                    if(speechResults.getResults().contains(s))
+                                    if (speechResults.toString().toLowerCase().contains(s.toLowerCase()))
                                     {
-                                        Log.d("test","YA GOT ME");
-                                        // do sound intent here
+                                        Log.d("result","YAGOTME");
+                                        mgr.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
+                                        BaseActivity.headphCtrl.ancCtrl.switchANC(false);
+
                                     }
                                 }
+
                             }
                         }
                 );

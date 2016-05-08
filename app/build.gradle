@@ -32,5 +32,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile files('libs/JARVIS-API.jar')
     compile files('libs/pocketsphinx-android-5prealpha-nolib.jar')
+    compile files('libs/jsonification-1.0.2b1.jar')
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile files('libs/everest-elite-sdk.jar')
 }
 

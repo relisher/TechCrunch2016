@@ -26,17 +26,7 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.BaseRecognizeC
 
 
 public class MainActivity extends Activity {
-    SpeechToText service = new SpeechToText();
-    RecognizeOptions.Builder builder = new RecognizeOptions.Builder();
 
-    private static final int RECORDER_SAMPLERATE = 8000;
-
-    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
-
-    private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
-
-    private Thread recordingThread = null;
-    private boolean isRecording = false;
     static Context c;
 
     @Override
@@ -55,8 +45,8 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                   c = v.getContext();
-                   new Thread(new RecordingHandler()).start();
+                c = v.getContext();
+                   new Thread(new AudioIn()).start();
             }
         });
         Button clickButton2 = (Button) findViewById(R.id.Keyword);
@@ -64,6 +54,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(MainActivity.this, AddKeywords.class);
                 startActivity(intent);
             }
